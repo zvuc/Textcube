@@ -106,9 +106,9 @@ function getScriptsOnFoot() {
 	<script defer type="text/javascript" src="<?php echo (doesHaveOwnership() ? $context->getProperty('service.path').'/resources' : $context->getProperty('service.resourcepath'));?>/script/jquery/jquery.bpopup-<?php echo JQUERY_BPOPUP_VERSION;?>.js"></script>
 
 
-	<script defer type="text/javascript" src="<?php echo $context->getProperty('service.resourcepath');?>/script/EAF4.js"></script>
-	<script defer type="text/javascript" src="<?php echo $context->getProperty('service.resourcepath');?>/script/common3.js"></script>
-	<script defer type="text/javascript" src="<?php echo $context->getProperty('service.resourcepath');?>/script/gallery.js" ></script>
+	<script defer type="text/javascript" src="<?php echo $context->getProperty('service.resourcepath');?>/script/min/EAF4.min.js"></script>
+	<script defer type="text/javascript" src="<?php echo $context->getProperty('service.resourcepath');?>/script/min/common3.min.js"></script>
+	<script defer type="text/javascript" src="<?php echo $context->getProperty('service.resourcepath');?>/script/min/gallery.min.js" ></script>
 
 	<script type="text/javascript">
 	//<![CDATA[
