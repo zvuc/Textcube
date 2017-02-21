@@ -67,15 +67,49 @@ function dressInsertBefore($tag, $value, & $contents, $useCache = false, $forceP
 function getScriptsOnHead($paging, $entryIds = null) {
 	$context = Model_Context::getInstance();
 	ob_start();
-?>
-	<script type="text/javascript" src="<?php echo (doesHaveOwnership() ? $context->getProperty('service.path').'/resources' : $context->getProperty('service.resourcepath'));?>/script/jquery/jquery-<?php echo JQUERY_VERSION;?>.js"></script>
-	<script type="text/javascript" src="<?php echo (doesHaveOwnership() ? $context->getProperty('service.path').'/resources' : $context->getProperty('service.resourcepath'));?>/script/jquery/jquery.bpopup-<?php echo JQUERY_BPOPUP_VERSION;?>.js"></script>
-	<script type="text/javascript">jQuery.noConflict();</script>
+	$view = ob_get_contents();
+	ob_end_clean();
+	return $view;
+}
 
-	<script type="text/javascript" src="<?php echo $context->getProperty('service.resourcepath');?>/script/EAF4.js"></script>
-	<script type="text/javascript" src="<?php echo $context->getProperty('service.resourcepath');?>/script/common3.js"></script>
-	<script type="text/javascript" src="<?php echo $context->getProperty('service.resourcepath');?>/script/gallery.js" ></script>
-	<script type="text/javascript" src="<?php echo $context->getProperty('service.resourcepath');?>/script/flash.js" ></script>
+function getUpperView() {
+	$context = Model_Context::getInstance();
+	ob_start();
+?>
+	<!--
+		<?php echo TEXTCUBE_NAME." ".TEXTCUBE_VERSION.CRLF;?>
+
+		Homepage: <?php echo TEXTCUBE_HOMEPAGE.CRLF;?>
+		<?php echo TEXTCUBE_COPYRIGHT.CRLF;?>
+	-->
+
+<div id="tcDialog" style="display:none;"></div>
+<?php
+	$view = ob_get_contents();
+	ob_end_clean();
+	return $view;
+}
+
+function getLowerView() {
+	ob_start();
+	$view = ob_get_contents();
+	ob_end_clean();
+	return $view;
+}
+
+function getScriptsOnFoot() {
+	$context = Model_Context::getInstance();
+	ob_start();
+?>
+
+	
+	<script defer type="text/javascript" src="<?php echo (doesHaveOwnership() ? $context->getProperty('service.path').'/resources' : $context->getProperty('service.resourcepath'));?>/script/jquery/jquery.bpopup-<?php echo JQUERY_BPOPUP_VERSION;?>.js"></script>
+
+
+	<script defer type="text/javascript" src="<?php echo $context->getProperty('service.resourcepath');?>/script/EAF4.js"></script>
+	<script defer type="text/javascript" src="<?php echo $context->getProperty('service.resourcepath');?>/script/common3.js"></script>
+	<script defer type="text/javascript" src="<?php echo $context->getProperty('service.resourcepath');?>/script/gallery.js" ></script>
+
 	<script type="text/javascript">
 	//<![CDATA[
 		var servicePath = "<?php echo $context->getProperty('service.path');?>";
@@ -105,32 +139,19 @@ function getScriptsOnHead($paging, $entryIds = null) {
 		}
 	//]]>
 	</script>
-<?php
-	$view = ob_get_contents();
-	ob_end_clean();
-	return $view;
-}
 
-function getUpperView() {
-	$context = Model_Context::getInstance();
-	ob_start();
-?>
-	<!--
-		<?php echo TEXTCUBE_NAME." ".TEXTCUBE_VERSION.CRLF;?>
-
-		Homepage: <?php echo TEXTCUBE_HOMEPAGE.CRLF;?>
-		<?php echo TEXTCUBE_COPYRIGHT.CRLF;?>
-	-->
 <?php
 	if (doesHaveOwnership()) {
 ?>
-	<script type="text/javascript" src="<?php echo $context->getProperty('service.resourcepath');?>/script/owner.js" ></script>
+	<script defer type="text/javascript" src="<?php echo $context->getProperty('service.resourcepath');?>/script/owner.js" ></script>
 <?php
 	}
 ?>
 	<script type="text/javascript">
 		//<![CDATA[
+		window.addEventListener('DOMContentLoaded', function() {
 			document.onkeydown = processShortcut;
+		});
 		//]]>
 	</script>
 <?php
@@ -158,29 +179,14 @@ function getUpperView() {
 </div>
 <?php
 	}
-?>
-<div id="tcDialog" style="display:none;"></div>
-<?php
-	$view = ob_get_contents();
-	ob_end_clean();
-	return $view;
-}
 
-function getLowerView() {
-	ob_start();
-	$view = ob_get_contents();
-	ob_end_clean();
-	return $view;
-}
-
-function getScriptsOnFoot() {
-	$context = Model_Context::getInstance();
-	ob_start();
     if (($context->getProperty('service.reader') != false) && (gmmktime() - Setting::getServiceSetting('lastFeedUpdate', 0, true) > 180)) {
 ?>
 	<script type="text/javascript">
 		//<![CDATA[
+		window.addEventListener('DOMContentLoaded', function() {
 			updateFeed();
+		});
 		//]]>
 	</script>
 <?php

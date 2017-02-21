@@ -25,13 +25,13 @@ if (!isset($skin)) {
 }
 $context = Model_Context::getInstance();
 $view = $skin->outter;
-$automaticLink = "	<link rel=\"stylesheet\" href=\"".$context->getProperty('service.resourcepath')."/style/system.css\" type=\"text/css\" media=\"screen\" />\n";
+//$automaticLink = "	<link rel=\"stylesheet\" href=\"".$context->getProperty('service.resourcepath')."/style/system.css\" type=\"text/css\" media=\"screen\" />\n";
 if (!is_null($context->getProperty('uri.permalink',null))) {
 	$canonicalLink = "  <link rel=\"canonical\" href=\"".$context->getProperty('uri.permalink')."\"/>\n";
 } else {
 	$canonicalLink = '';
 }
-dress('SKIN_head_end', $automaticLink.$canonicalLink."[##_SKIN_head_end_##]", $view);
+dress('SKIN_head_end', $canonicalLink."[##_SKIN_head_end_##]", $view);
 $view = str_replace('[##_SKIN_head_end_##]',getScriptsOnHead((isset($paging) ? $paging : null),$entryIds).'[##_SKIN_head_end_##]', $view); // TO DO : caching this part.
 $view = str_replace('[##_SKIN_body_start_##]',getUpperView().'[##_SKIN_body_start_##]', $view);
 $view = str_replace('[##_SKIN_body_end_##]',getLowerView().getScriptsOnFoot().'[##_SKIN_body_end_##]', $view); // care the order for js function overloading issue.
