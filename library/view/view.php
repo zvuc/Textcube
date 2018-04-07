@@ -1261,6 +1261,8 @@ function getEntryContentView($blogid, $id, $content, $formatter, $keywords = arr
 					$attributes .= preg_match('/(alt="([^"]*)")/si', $images[$i][2], $matches) ? ' '.$matches[1] : ' alt="resize"';
 					$attributes .= preg_match('/(title="([^"]*)")/si', $images[$i][2], $matches) ? $title = ' '.$matches[1] : '';
 
+					$classes .= preg_match('/(class="([^"]*)")/si', $images[$i][2], $matches) ? ' '.$matches[1] : '';
+
 					$tempFileName = array_pop(explode('/', $images[$i][1]));
 					if (preg_match('/(.+)\.w(\d{1,})\-h(\d{1,})\.(.+)/', $tempFileName, $matches))
 						$tempFileName = $matches[1].'.'.$matches[4];
@@ -1300,17 +1302,17 @@ function getEntryContentView($blogid, $id, $content, $formatter, $keywords = arr
 								list($resizedImageURL, $resizedImageWidth, $resizedImageHeight, $resizedImageSrc) = $image->getImageResizer($tempFileName, array('width' => $tempAttributes['width']));
 
 								// use default resized image for src for fallback
-								$newImage = "<img src=\"{$resizedImageURL}\" srcset=\"{$srcset}\" width=\"{$tempOriginInfo[0]}\" height=\"{$tempOriginInfo[1]}\" {$attributes} data-orientation=\"{$imageOrientation}\" data-zoomable=\"{$imageZoomable}\" />";
+								$newImage = "<img src=\"{$resizedImageURL}\" srcset=\"{$srcset}\" width=\"{$tempOriginInfo[0]}\" height=\"{$tempOriginInfo[1]}\" {$attributes} {$classes} data-orientation=\"{$imageOrientation}\" data-zoomable=\"{$imageZoomable}\" />";
 							} 
 
 							// if using default option & image is larger than content
 							else if ($tempOriginInfo[0] > $tempAttributes['width']) {
 								list($resizedImageURL, $resizedImageWidth, $resizedImageHeight, $resizedImageSrc) = $image->getImageResizer($tempFileName, array('width' => $tempAttributes['width']));
-								$newImage = "<img src=\"{$resizedImageURL}\" width=\"{$resizedImageWidth}\" height=\"{$resizedImageHeight}\" {$attributes} data-orientation=\"{$imageOrientation}\" data-zoomable=\"{$imageZoomable}\"/>";
+								$newImage = "<img src=\"{$resizedImageURL}\" width=\"{$resizedImageWidth}\" height=\"{$resizedImageHeight}\" {$attributes} {$classes} data-orientation=\"{$imageOrientation}\" data-zoomable=\"{$imageZoomable}\"/>";
 							} 
 							// if image is smaller than content
 							else {
-								$newImage = "<img src=\"{$origImageURL}\" width=\"{$tempOriginInfo[0]}\" height=\"{$tempOriginInfo[1]}\" {$attributes} data-orientation=\"{$imageOrientation}\" data-zoomable=\"{$imageZoomable}\"/>";
+								$newImage = "<img src=\"{$origImageURL}\" width=\"{$tempOriginInfo[0]}\" height=\"{$tempOriginInfo[1]}\" {$attributes} {$classes} data-orientation=\"{$imageOrientation}\" data-zoomable=\"{$imageZoomable}\"/>";
 							}
 						
 						}
