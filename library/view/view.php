@@ -1260,6 +1260,7 @@ function getEntryContentView($blogid, $id, $content, $formatter, $keywords = arr
 					$attributes = preg_match('/(style="cursor: pointer;" onclick="open_img\((.[^"]+)\); return false;")/si', $images[$i][2], $matches) ? ' '.$matches[1] : '';
 					$attributes .= preg_match('/(alt="([^"]*)")/si', $images[$i][2], $matches) ? ' '.$matches[1] : ' alt="resize"';
 					$attributes .= preg_match('/(title="([^"]*)")/si', $images[$i][2], $matches) ? $title = ' '.$matches[1] : '';
+					$attributes .= preg_match('/(style="([^"]*)")/si', $images[$i][2], $matches) ? $title = ' '.$matches[1] : '';
 
 					$classes .= preg_match('/(class="([^"]*)")/si', $images[$i][2], $matches) ? ' '.$matches[1] : '';
 
